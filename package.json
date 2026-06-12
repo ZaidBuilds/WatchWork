@@ -1,5 +1,5 @@
 {
-  "name": "action-engine",
+  "name": "watchwork",
   "private": true,
   "workspaces": [
     "apps/web"
