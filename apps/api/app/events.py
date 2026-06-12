@@ -41,11 +41,11 @@ class EventBus:
     def content_captured(self, content_id: UUID, user_id: UUID, title: str | None = None) -> None:
         self.publish(Event("content.captured", {"content_id": str(content_id), "user_id": str(user_id), "title": title}))
 
-    def plan_created(self, content_id: UUID, plan_id: UUID, task_count: int) -> None:
-        self.publish(Event("plan.created", {"content_id": str(content_id), "plan_id": str(plan_id), "task_count": task_count}))
+    def plan_created(self, content_id: UUID, plan_id: UUID, task_count: int, user_id: UUID | None = None) -> None:
+        self.publish(Event("plan.created", {"content_id": str(content_id), "plan_id": str(plan_id), "task_count": task_count, "user_id": str(user_id) if user_id else None}))
 
-    def task_completed(self, task_id: UUID, plan_id: UUID, completion_pct: int) -> None:
-        self.publish(Event("task.completed", {"task_id": str(task_id), "plan_id": str(plan_id), "completion_pct": completion_pct}))
+    def task_completed(self, task_id: UUID, plan_id: UUID, completion_pct: int, user_id: UUID | None = None) -> None:
+        self.publish(Event("task.completed", {"task_id": str(task_id), "plan_id": str(plan_id), "completion_pct": completion_pct, "user_id": str(user_id) if user_id else None}))
 
 
 event_bus = EventBus()

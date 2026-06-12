@@ -1,14 +1,52 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { notFound, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { AppShell } from "@/components/shell";
 import { ProcessButton } from "@/components/process-button";
 import { StatusBadge } from "@/components/status-badge";
 import { TaskList } from "@/components/task-list";
 import { apiGet, type ContentDetail } from "@/lib/api";
 
-export default async function ContentDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const detail = await apiGet<ContentDetail>(`/content/${id}`).catch(() => null);
-  if (!detail) notFound();
+export default function ContentDetailPage() {
+  const params = useParams<{ id: string }>();
+  const [detail, setDetail] = useState<ContentDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFoundState, setNotFoundState] = useState(false);
+
+  useEffect(() => {
+    if (!params?.id) return;
+    apiGet<ContentDetail>(`/content/${params.id}`)
+      .then(setDetail)
+      .catch(() => setNotFoundState(true))
+      .finally(() => setLoading(false));
+  }, [params?.id]);
+
+  if (loading) {
+    return (
+      <AppShell>
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 w-48 rounded bg-[#f2e8dc]" />
+          <div className="h-12 w-96 rounded bg-[#f2e8dc]" />
+          <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="h-64 rounded border border-line bg-[#fffdf9]" />
+            <div className="h-64 rounded border border-line bg-[#fffdf9]" />
+          </div>
+        </div>
+      </AppShell>
+    );
+  }
+
+  if (notFoundState || !detail) {
+    return (
+      <AppShell>
+        <div className="rounded border border-dashed border-line p-16 text-center">
+          <p className="text-lg font-bold">Content not found</p>
+          <p className="mt-2 text-sm text-[#725D50]">This capture may have been removed.</p>
+        </div>
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell>

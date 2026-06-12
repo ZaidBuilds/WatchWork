@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Action Engine Capture",
-  "version": "0.2.0",
-  "description": "Capture YouTube learning content into Action Engine without copy-pasting links.",
+  "name": "WatchWork Capture",
+  "version": "0.3.0",
+  "description": "Capture YouTube learning content into WatchWork without copy-pasting links.",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": ["http://localhost:8000/*", "https://www.youtube.com/*", "https://youtube.com/*"],
   "action": {
-    "default_title": "Send to Action Engine",
+    "default_title": "Send to WatchWork",
     "default_popup": "popup.html"
   },
   "options_page": "options.html",

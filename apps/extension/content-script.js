@@ -1,24 +1,25 @@
 const BUTTON_ID = "action-engine-capture-button";
 const DEFAULT_API_URL = "http://localhost:8000";
+const REQUEST_TIMEOUT_MS = 15000;
 
 async function getApiUrl() {
-  const { api_url } = await chrome.storage.sync.get("api_url");
+  const { api_url } = await chrome.storage.local.get("api_url");
   return api_url || DEFAULT_API_URL;
 }
 
 async function getAuthToken() {
-  const { auth_token } = await chrome.storage.sync.get("auth_token");
+  const { auth_token } = await chrome.storage.local.get("auth_token");
   return auth_token || null;
 }
 
 function addCaptureButton() {
   if (document.getElementById(BUTTON_ID)) return;
-  const actions = document.querySelector("#top-level-buttons-computed");
+  const actions = document.querySelector("#top-level-buttons-computed") || document.querySelector("ytd-menu-renderer yt-button-shape");
   if (!actions) return;
 
   const button = document.createElement("button");
   button.id = BUTTON_ID;
-  button.textContent = "Action Engine";
+  button.textContent = "WatchWork";
   button.style.border = "0";
   button.style.borderRadius = "18px";
   button.style.background = "#2C1810";
@@ -27,14 +28,14 @@ function addCaptureButton() {
   button.style.fontWeight = "700";
   button.style.marginLeft = "8px";
   button.style.padding = "8px 14px";
-  button.title = "Send this video to Action Engine";
+  button.title = "Send this video to WatchWork";
   button.addEventListener("click", async () => {
     const apiBase = await getApiUrl();
     const token = await getAuthToken();
 
     if (!token) {
       button.textContent = "Login required";
-      window.setTimeout(() => { button.textContent = "Action Engine"; }, 3000);
+      window.setTimeout(() => { button.textContent = "WatchWork"; }, 3000);
       return;
     }
 
@@ -51,6 +52,9 @@ function addCaptureButton() {
     };
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
       const response = await fetch(`${apiBase}/api/ingest/browser-capture`, {
         method: "POST",
         headers: {
@@ -58,21 +62,25 @@ function addCaptureButton() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         button.textContent = "Captured";
       } else if (response.status === 401) {
         button.textContent = "Login required";
+      } else if (response.status === 429) {
+        button.textContent = "Limit reached";
       } else {
         button.textContent = "Failed";
       }
-    } catch {
-      button.textContent = "Error";
+    } catch (err) {
+      button.textContent = err.name === "AbortError" ? "Timeout" : "Error";
     }
 
     window.setTimeout(() => {
-      button.textContent = "Action Engine";
+      button.textContent = "WatchWork";
     }, 2000);
   });
 

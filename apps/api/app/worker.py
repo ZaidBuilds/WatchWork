@@ -94,7 +94,7 @@ def _process_job(job_id: UUID) -> None:
             session.commit()
             logger.info("Job %s completed successfully.", job_id)
 
-            event_bus.plan_created(content_id=item.id, plan_id=plan.id, task_count=len(plan_json["tasks"]))
+            event_bus.plan_created(content_id=item.id, plan_id=plan.id, task_count=len(plan_json["tasks"]), user_id=item.user_id)
         except Exception as exc:
             item.status = ContentStatus.failed
             item.error_message = str(exc)

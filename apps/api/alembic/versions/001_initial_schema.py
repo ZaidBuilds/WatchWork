@@ -125,8 +125,22 @@ def upgrade() -> None:
     )
     op.create_index("ix_agentlog_action_plan_id", "agentlog", ["action_plan_id"])
 
+    op.create_table(
+        "webhookconfig",
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.Column("user_id", sa.Uuid(), nullable=False),
+        sa.Column("url", sa.String(), nullable=False),
+        sa.Column("events", sa.JSON(), nullable=True),
+        sa.Column("is_active", sa.Boolean(), nullable=False),
+        sa.Column("created_at", sa.DateTime(), nullable=False),
+        sa.ForeignKeyConstraint(["user_id"], ["user.id"]),
+        sa.PrimaryKeyConstraint("id"),
+    )
+    op.create_index("ix_webhookconfig_user_id", "webhookconfig", ["user_id"])
+
 
 def downgrade() -> None:
+    op.drop_table("webhookconfig")
     op.drop_table("agentlog")
     op.drop_table("task")
     op.drop_table("job")

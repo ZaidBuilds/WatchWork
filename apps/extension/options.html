@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Action Engine — Options</title>
+    <title>WatchWork — Options</title>
     <style>
       body { width: 380px; margin: 0; background: #faf7f2; color: #2c1810; font-family: Inter, Arial, sans-serif; padding: 18px; }
       h1 { font-size: 20px; margin: 0 0 16px; }
@@ -13,37 +13,39 @@
       .hint { font-size: 11px; color: #725d50; margin-top: 4px; }
       button { width: 100%; border: 0; border-radius: 6px; background: #2c1810; color: #faf7f2; cursor: pointer; font-weight: 800; padding: 10px; font-size: 13px; }
       button.secondary { background: #E8DED3; color: #2c1810; margin-top: 8px; }
+      button.danger { background: #8B1E18; color: #faf7f2; margin-top: 8px; display: none; }
       #status { min-height: 18px; font-size: 12px; color: #725d50; margin-top: 8px; }
       .logged-in { color: #245B31; }
       .logged-out { color: #8B1E18; }
     </style>
   </head>
   <body>
-    <h1>Action Engine Settings</h1>
+    <h1>WatchWork Settings</h1>
 
     <div class="section">
       <label for="api_url">API Server URL</label>
       <input id="api_url" type="url" placeholder="http://localhost:8000" />
-      <p class="hint">The URL of your Action Engine API server.</p>
+      <p class="hint">The URL of your WatchWork API server.</p>
     </div>
 
-    <div class="section">
+    <button id="save" class="secondary">Save API URL</button>
+    <p id="status"></p>
+
+    <div class="section" style="margin-top: 18px;">
       <label for="email">Email</label>
-      <input id="email" type="email" placeholder="you@example.com" />
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="username" />
     </div>
 
     <div class="section">
       <label for="password">Password</label>
-      <input id="password" type="password" placeholder="Your password" />
+      <input id="password" type="password" placeholder="Your password" autocomplete="current-password" />
     </div>
 
     <button id="login">Login</button>
-    <button id="register" class="secondary">Create Account</button>
+    <button id="register" class="secondary">Create Account (auto-login)</button>
+    <button id="logout" class="danger">Logout</button>
 
     <p id="auth-status" class="hint"></p>
-
-    <button id="save" class="secondary">Save API URL</button>
-    <p id="status"></p>
 
     <script src="options.js"></script>
   </body>

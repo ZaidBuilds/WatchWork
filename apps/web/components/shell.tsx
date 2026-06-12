@@ -52,7 +52,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-copper">Zaidbuilds</p>
-            <h1 className="text-xl font-bold">Action Engine</h1>
+            <h1 className="text-xl font-bold">WatchWork</h1>
           </div>
         </div>
         <nav className="space-y-1">
@@ -61,7 +61,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               key={item.href}
               href={item.href}
               className={`flex items-center gap-3 rounded px-3 py-2 text-sm font-medium hover:bg-[#f2e8dc] ${
-                pathname === item.href ? "bg-[#f2e8dc] font-semibold" : ""
+                pathname === item.href || (item.href === "/dashboard" && pathname.startsWith("/content")) ? "bg-[#f2e8dc] font-semibold" : ""
               }`}
             >
               <item.icon size={18} />
@@ -89,7 +89,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="grid h-8 w-8 place-items-center rounded bg-espresso text-cream">
             <Zap size={16} />
           </div>
-          <span className="font-bold">Action Engine</span>
+          <span className="font-bold">WatchWork</span>
         </div>
       </div>
 
@@ -108,7 +108,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-copper">Zaidbuilds</p>
-            <h1 className="text-xl font-bold">Action Engine</h1>
+            <h1 className="text-xl font-bold">WatchWork</h1>
           </div>
         </div>
         <nav className="space-y-1">
@@ -117,7 +117,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               key={item.href}
               href={item.href}
               className={`flex items-center gap-3 rounded px-3 py-2 text-sm font-medium hover:bg-[#f2e8dc] ${
-                pathname === item.href ? "bg-[#f2e8dc]" : ""
+                pathname === item.href || (item.href === "/dashboard" && pathname.startsWith("/content")) ? "bg-[#f2e8dc]" : ""
               }`}
             >
               <item.icon size={18} />
@@ -143,7 +143,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             key={item.href}
             href={item.href}
             className={`flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium ${
-              pathname === item.href ? "text-copper" : "text-[#9D8B7F]"
+              pathname === item.href || (item.href === "/dashboard" && pathname.startsWith("/content")) ? "text-copper" : "text-[#9D8B7F]"
             }`}
           >
             <item.icon size={20} />

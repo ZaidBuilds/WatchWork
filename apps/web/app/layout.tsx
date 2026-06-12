@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Action Engine — Turn Learning Into Execution",
-    template: "%s | Action Engine",
+    default: "WatchWork — Turn Learning Into Execution",
+    template: "%s | WatchWork",
   },
   description: "Turn saved YouTube learning content into tracked execution plans. Capture videos, generate AI-powered action plans, and track your progress.",
   keywords: ["productivity", "learning", "YouTube", "action plans", "task management", "AI"],
@@ -16,13 +16,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Action Engine",
-    title: "Action Engine — Turn Learning Into Execution",
+    siteName: "WatchWork",
+    title: "WatchWork — Turn Learning Into Execution",
     description: "Turn saved YouTube learning content into tracked execution plans.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Action Engine — Turn Learning Into Execution",
+    title: "WatchWork — Turn Learning Into Execution",
     description: "Turn saved YouTube learning content into tracked execution plans.",
   },
   robots: {
@@ -41,8 +41,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
       <body className={inter.className}>
         <AuthProvider>{children}</AuthProvider>
       </body>

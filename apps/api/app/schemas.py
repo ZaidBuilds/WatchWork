@@ -74,6 +74,8 @@ class JobResponse(BaseModel):
 
 
 class PaginatedResponse(BaseModel):
+    model_config = {"arbitrary_types_allowed": True}
+
     items: list
     total: int
     offset: int

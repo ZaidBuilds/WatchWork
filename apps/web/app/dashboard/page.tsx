@@ -1,15 +1,23 @@
+"use client";
+
 import { Activity, CheckCircle2, Lock, PlusCircle } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { AppShell } from "@/components/shell";
 import { ContentCard } from "@/components/content-card";
 import { apiGet, type ContentItem, type PaginatedResponse } from "@/lib/api";
 
-export default async function DashboardPage() {
-  const data = await apiGet<PaginatedResponse<ContentItem>>("/content?limit=6").catch(() => ({
-    items: [],
-    total: 0,
-    offset: 0,
-    limit: 6,
-  }));
+export default function DashboardPage() {
+  const [data, setData] = useState<PaginatedResponse<ContentItem>>({ items: [], total: 0, offset: 0, limit: 6 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    apiGet<PaginatedResponse<ContentItem>>("/content?limit=6")
+      .then(setData)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
   const content = data.items;
   const ready = content.filter((item) => item.status === "ready").length;
   const active = content.filter((item) => item.status !== "failed").length;
@@ -45,20 +53,27 @@ export default async function DashboardPage() {
       <section className="mt-6">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="text-xl font-bold">Recent captures</h3>
-          <a href="/library" className="text-sm font-semibold text-copper">
+          <Link href="/library" className="text-sm font-semibold text-copper">
             View library
-          </a>
+          </Link>
         </div>
-        <div className="grid gap-4 lg:grid-cols-2">
-          {content.map((item) => (
-            <ContentCard key={item.id} item={item} />
-          ))}
-        </div>
-        {content.length === 0 ? (
+        {loading ? (
+          <div className="grid gap-4 lg:grid-cols-2">
+            {[1, 2].map((i) => (
+              <div key={i} className="h-32 animate-pulse rounded border border-line bg-[#fffdf9]" />
+            ))}
+          </div>
+        ) : content.length > 0 ? (
+          <div className="grid gap-4 lg:grid-cols-2">
+            {content.map((item) => (
+              <ContentCard key={item.id} item={item} />
+            ))}
+          </div>
+        ) : (
           <div className="rounded border border-dashed border-line p-8 text-center text-[#725D50]">
             No captures yet. Your first win is loading the extension and sending one high-value video.
           </div>
-        ) : null}
+        )}
       </section>
     </AppShell>
   );
