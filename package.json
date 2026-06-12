@@ -1,0 +1,12 @@
+{
+  "name": "action-engine",
+  "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "web:dev": "npm --workspace apps/web run dev",
+    "web:build": "npm --workspace apps/web run build",
+    "api:dev": "python -m uvicorn app.main:app --app-dir apps/api --reload --port 8000"
+  }
+}
