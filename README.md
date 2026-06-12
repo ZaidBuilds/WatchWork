@@ -1,10 +1,10 @@
 <div align="center">
 
-# Action Engine
+# WatchWork
 
-**Turn saved learning content into tracked execution plans.**
+**Watch a video. Get a plan. Start executing.**
 
-[![CI](https://github.com/zaidbuilds/action-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/zaidbuilds/action-engine/actions/workflows/ci.yml)
+[![CI](https://github.com/ZaidBuilds/WatchWork/actions/workflows/ci.yml/badge.svg)](https://github.com/ZaidBuilds/WatchWork/actions/workflows/ci.yml)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![Next.js 15](https://img.shields.io/badge/next.js-15-black.svg)](https://nextjs.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -91,8 +91,8 @@ No copy-paste links. No endless watch-later lists. Just execution.
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/zaidbuilds/action-engine.git
-cd action-engine
+git clone https://github.com/ZaidBuilds/WatchWork.git
+cd WatchWork
 ```
 
 ### 2. Start the API
@@ -193,7 +193,7 @@ npm run build
 ## Project Structure
 
 ```
-action-engine/
+WatchWork/
 ├── apps/
 │   ├── api/              # FastAPI backend
 │   │   ├── app/
